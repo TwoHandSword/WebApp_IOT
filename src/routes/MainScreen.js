@@ -1,4 +1,5 @@
 import React from "react";
+import "./MainScreen.css";
 
 class MainScreen extends React.Component {
   state = {
@@ -19,11 +20,13 @@ class MainScreen extends React.Component {
   render() {
     const { isLoading } = this.state;
     return (
-      <div style={{ flex: 1 }}>
+      <div style={{ width: "100%", height: "100%" }}>
         {isLoading ? (
           <div>Loading...</div>
         ) : (
-          <div style={{ flex: 1 }}>already Load</div>
+          <div className="mainBody">
+            <div style={{ flex: 1 }}></div>
+          </div>
         )}
       </div>
     );

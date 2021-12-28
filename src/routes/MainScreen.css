@@ -1,0 +1,15 @@
+.mainBody {
+  width: "100%";
+  height: 100px;
+  background-color: #117aff;
+}
+
+header {
+  flex: 1;
+  background-color: rgb(175, 233, 67);
+}
+
+.MainScreen {
+  flex: 1;
+  background-color: #117aff;
+}
