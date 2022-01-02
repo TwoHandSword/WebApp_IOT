@@ -1,11 +1,23 @@
 import React from "react";
-import "./MainScreen.css";
+import styled from "styled-components"
+
+interface ContainerProps{
+  width: number;
+  height: number;
+}
+
+const Container = styled.div`
+flex: 1;
+width:${props => props.width};
+height:${props => props.height};
+background:#117aff;
+`;
 
 class MainScreen extends React.Component {
   state = {
     isLoading: true,
-    width: 0,
-    height: 0,
+    width: window.innerWidth,
+    height: window.innerHeight,
   };
 
   getDatas = () => {
@@ -20,13 +32,15 @@ class MainScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.getDatas();
+    this.getDatas(); 
     window.addEventListener("resize", this.updateDimensions);
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
   }
+
+  
 
   render() {
     const { isLoading } = this.state;
@@ -37,9 +51,9 @@ class MainScreen extends React.Component {
         {isLoading ? (
           <div>Loading...</div>
         ) : (
-          <div style={{width: this.state.width, height: this.state.height, backgroundColor: "#117aff"}}>
-            <div style={{ flex: 1 }}>Hello</div>
-          </div>
+          <Container width={this.state.width} height={this.state.height}>
+            hello
+          </Container>
         )}
       </div>
     );
