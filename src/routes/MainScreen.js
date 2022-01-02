@@ -4,6 +4,8 @@ import "./MainScreen.css";
 class MainScreen extends React.Component {
   state = {
     isLoading: true,
+    width: 0,
+    height: 0,
   };
 
   getDatas = () => {
@@ -13,19 +15,30 @@ class MainScreen extends React.Component {
     });
   };
 
+  updateDimensions = () => {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  };
+
   componentDidMount() {
     this.getDatas();
+    window.addEventListener("resize", this.updateDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
   }
 
   render() {
     const { isLoading } = this.state;
+    console.log(window.innerHeight);
+    console.log(this.state.height);
     return (
       <div style={{ width: "100%", height: "100%" }}>
         {isLoading ? (
           <div>Loading...</div>
         ) : (
-          <div className="mainBody">
-            <div style={{ flex: 1 }}></div>
+          <div style={{width: this.state.width, height: this.state.height, backgroundColor: "#117aff"}}>
+            <div style={{ flex: 1 }}>Hello</div>
           </div>
         )}
       </div>
