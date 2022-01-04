@@ -29,6 +29,7 @@ const Header = styled.div`
   flex: 1;
   width: ${(props) => props};
   height: 150px;
+  margin-bottom: 20px;
 `;
 
 const HeaderText = styled.div`
@@ -44,8 +45,9 @@ const HeaderText = styled.div`
 const MainImg = styled.div`
   height: 300px;
   width: ${(props) => props};
-  background: red;
 `;
+
+const LoginBtn = styled.div``;
 
 class MainScreen extends React.Component {
   state = {
@@ -90,7 +92,17 @@ class MainScreen extends React.Component {
               <HeaderText>Let's get Your</HeaderText>
               <HeaderText>Stick!</HeaderText>
             </Header>
-            <MainImg width={this.state.width}></MainImg>
+            <MainImg width={this.state.width}>
+              <img
+                style={{
+                  width: "300px",
+                  height: "300px",
+                  resizeMode: "contain",
+                }}
+                src={require("../assets/img/oldman.jpg")}
+              />
+            </MainImg>
+            <LoginBtn></LoginBtn>
           </Container>
         )}
       </div>
