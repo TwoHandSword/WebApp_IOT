@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import GlobalFonts from "../fonts/fonts";
+import KakaoLogin from "../components/kakaoLogin";
 
 interface ContainerProps {
   width: number;
@@ -30,6 +31,9 @@ const Header = styled.div`
   width: ${(props) => props};
   height: 150px;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 `;
 
 const HeaderText = styled.div`
@@ -40,20 +44,29 @@ const HeaderText = styled.div`
   font-style: normal;
   color: #1f3350;
   font-family: "AppleSDGothicNeo";
+  text-align: center;
 `;
 
 const MainImg = styled.div`
   height: 300px;
   width: ${(props) => props};
+  display: flex;
+  justify-content: center;
 `;
 
-const LoginBtn = styled.div``;
+const ButtonBox = styled.div`
+  margin-top: 70px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+`;
 
 class MainScreen extends React.Component {
   state = {
     isLoading: true,
     width: window.innerWidth,
     height: window.innerHeight,
+    loginResult: false,
   };
 
   getDatas = () => {
@@ -102,7 +115,9 @@ class MainScreen extends React.Component {
                 src={require("../assets/img/oldman.jpg")}
               />
             </MainImg>
-            <LoginBtn></LoginBtn>
+            <ButtonBox>
+              <KakaoLogin></KakaoLogin>
+            </ButtonBox>
           </Container>
         )}
       </div>

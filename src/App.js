@@ -1,18 +1,24 @@
 import React from "react";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainScreen from "./routes/MainScreen";
+import KakaoLoginAuth from "./routes/kakaoLoginAuth";
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route
           path="/"
           exact={true}
           element={<MainScreen></MainScreen>}
         ></Route>
+        <Route
+          path="/kakaoLogin"
+          exact={true}
+          element={<KakaoLoginAuth></KakaoLoginAuth>}
+        ></Route>
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
