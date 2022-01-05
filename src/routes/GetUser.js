@@ -1,4 +1,20 @@
 import React from "react";
+import styled from "styled-components";
+
+const Profile = styled.div`
+  flex: 1;
+  flex-direction: row;
+`;
+
+const ProfileName = styled.div`
+  flex: 1;
+`;
+
+const ProfilePhoto = styled.div`
+  flex: 1;
+  width: 60px;
+  height: 60px;
+`;
 
 class GetUser extends React.Component {
   // 사용자 정보를 가져온다면 갱신한다.
@@ -33,10 +49,17 @@ class GetUser extends React.Component {
     const { age_range, profile_image_url } = this.state;
 
     return (
-      <div>
-        <h1>{age_range ? age_range : ""}</h1>
-        <img src={profile_image_url} alt="profile_img" title="img_title" />
-      </div>
+      <Profile>
+        <ProfileName>{age_range ? age_range : ""}</ProfileName>
+        <ProfilePhoto>
+          <img
+            style={{ width: "60px", height: "60px", borderRadius: "30px" }}
+            src={profile_image_url}
+            alt="profile_img"
+            title="img_title"
+          />
+        </ProfilePhoto>
+      </Profile>
     );
   }
 }
