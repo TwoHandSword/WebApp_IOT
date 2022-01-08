@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Amplify from "aws-amplify";
 import { AWSIoTProvider } from "@aws-amplify/pubsub/lib/Providers";
+import High from "../components/chart";
 
 function init() {
   Amplify.configure({
@@ -20,17 +21,32 @@ function init() {
     })
   );
 }
+
+/*
 function sub() {
   Amplify.PubSub.subscribe("pi/1").subscribe({
-    next: (data) => console.log("Message received", data),
+    next: (data) => {
+      console.log("Message received", data.value.message);
+      mqttMessage(data.value.message);
+    },
     error: (error) => console.error(error),
     close: () => console.log("Done"),
   });
+}
+
+function mqttMessage(value) {
+  let point = {
+    x: new Date().getTime(),
+    y: value,
+    marker: { enabled: false },
+  };
+  date[0].addPoint(point, true, false);
 }
 interface ContainerProps {
   width: number;
   height: number;
 }
+*/
 
 interface BodyProps {
   height: Number;
@@ -117,8 +133,8 @@ class GetUser extends React.Component {
       },
     });
 
-    init();
-    sub();
+    init(); // initialize AWS
+    //sub(); // subscribe
   }
 
   render() {
@@ -144,7 +160,9 @@ class GetUser extends React.Component {
           <ProfileName>{age_range ? age_range : ""}'s Sticks!</ProfileName>
         </Profile>
         <div style={{ height: "2px", backgroundColor: "#e4e7ec" }}></div>
-        <Body height={this.state.height - 80}>하이</Body>
+        <Body height={this.state.height - 80}>
+          <High data={this.state.data}></High>
+        </Body>
       </Container>
     );
   }
