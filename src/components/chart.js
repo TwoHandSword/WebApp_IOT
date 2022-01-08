@@ -25,12 +25,12 @@ function sub() {
 // GPS - 지도 [위도, 경도, 고도 - 표시] //이동 경로 -> 로직 추가 버튼을 추가 시작 종료
 // 가속도 - cube.ai -> stirng : 이미지 사람 지팡이 변화
 
-const High = () => {
+const High = (props) => {
   // function High
   const chartComponent = useRef(null);
   const [options, setOptions] = useState({
     title: {
-      text: "heart rate",
+      text: props.signalName,
     },
     xAxis: {
       type: "datetime",
@@ -39,7 +39,7 @@ const High = () => {
     },
     series: [
       {
-        name: "heart_rate",
+        name: props.signalName,
         data: [0, 0, 0],
       },
     ],
@@ -47,7 +47,7 @@ const High = () => {
 
   useEffect(() => {
     var data_python = 0;
-    Amplify.PubSub.subscribe("pi/1").subscribe({
+    Amplify.PubSub.subscribe(props.channelName).subscribe({
       next: (data) => {
         console.log("Message received", data.value.action);
         data_python = data.value.action;
@@ -61,7 +61,7 @@ const High = () => {
       if (chart) {
         chart.series[0].addPoint(data_python);
       }
-    }, 1000);
+    }, 2000);
 
     return () => {
       clearInterval(interval);

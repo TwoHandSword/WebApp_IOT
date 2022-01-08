@@ -160,7 +160,14 @@ class GetUser extends React.Component {
         </Profile>
         <div style={{ height: "2px", backgroundColor: "#e4e7ec" }}></div>
         <Body height={this.state.height - 80}>
-          <High data={this.state.data}></High>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <High channelName="pi/1" signalName="Heart Rates"></High>
+            <High channelName="pi/2" signalName="Temperature"></High>
+          </div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <High channelName="pi/3" signalName="Humidity"></High>
+            <High channelName="pi/4" signalName="Air pollution"></High>
+          </div>
         </Body>
       </Container>
     );
