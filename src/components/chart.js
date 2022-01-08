@@ -49,7 +49,7 @@ const High = (props) => {
     var data_python = 0;
     Amplify.PubSub.subscribe(props.channelName).subscribe({
       next: (data) => {
-        console.log("Message received", data.value.action);
+        //console.log("Message received", data.value.action);
         data_python = data.value.action;
       },
       error: (error) => console.error(error),

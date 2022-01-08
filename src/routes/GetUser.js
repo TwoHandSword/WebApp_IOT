@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Amplify from "aws-amplify";
 import { AWSIoTProvider } from "@aws-amplify/pubsub/lib/Providers";
 import High from "../components/chart";
+import StoreLocation from "../components/Map";
 
 function init() {
   Amplify.configure({
@@ -91,6 +92,8 @@ const ProfilePhoto = styled.div`
 const Body = styled.div`
   flex: 1;
   height: ${(props) => props};
+  padding-top: 20px;
+  background: #f7f9fb;
 `;
 class GetUser extends React.Component {
   // 사용자 정보를 가져온다면 갱신한다.
@@ -99,6 +102,7 @@ class GetUser extends React.Component {
     profile_image_url: "",
     width: window.innerWidth,
     height: window.innerHeight,
+    storeCoordinate: [35.85133, 127.734086],
   };
 
   updateDimensions = () => {
@@ -160,11 +164,35 @@ class GetUser extends React.Component {
         </Profile>
         <div style={{ height: "2px", backgroundColor: "#e4e7ec" }}></div>
         <Body height={this.state.height - 80}>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "40px",
+            }}
+          >
+            <StoreLocation
+              style={{ width: "500px", height: "100%" }}
+              storeCoordinate={this.state.storeCoordinate}
+            ></StoreLocation>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
             <High channelName="pi/1" signalName="Heart Rates"></High>
             <High channelName="pi/2" signalName="Temperature"></High>
           </div>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
             <High channelName="pi/3" signalName="Humidity"></High>
             <High channelName="pi/4" signalName="Air pollution"></High>
           </div>

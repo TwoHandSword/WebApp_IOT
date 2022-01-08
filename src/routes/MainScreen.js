@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import GlobalFonts from "../fonts/fonts";
 import GetUser from "./GetUser";
+import Kakao from "../components/properties";
 
 interface ContainerProps {
   width: number;
@@ -16,7 +17,7 @@ interface MainImgProps {
   width: number;
 }
 
-const { Kakao } = window;
+//const { Kakao } = window;
 
 const Container = styled.div`
   flex: 1;
