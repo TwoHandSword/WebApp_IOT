@@ -91,7 +91,6 @@ const ProfilePhoto = styled.div`
 const Body = styled.div`
   flex: 1;
   height: ${(props) => props};
-  background: red;
 `;
 class GetUser extends React.Component {
   // 사용자 정보를 가져온다면 갱신한다.
