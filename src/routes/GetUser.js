@@ -23,32 +23,6 @@ function init() {
   );
 }
 
-/*
-function sub() {
-  Amplify.PubSub.subscribe("pi/1").subscribe({
-    next: (data) => {
-      console.log("Message received", data.value.message);
-      mqttMessage(data.value.message);
-    },
-    error: (error) => console.error(error),
-    close: () => console.log("Done"),
-  });
-}
-
-function mqttMessage(value) {
-  let point = {
-    x: new Date().getTime(),
-    y: value,
-    marker: { enabled: false },
-  };
-  date[0].addPoint(point, true, false);
-}
-interface ContainerProps {
-  width: number;
-  height: number;
-}
-*/
-
 interface BodyProps {
   height: Number;
 }
@@ -81,12 +55,8 @@ const ProfileName = styled.div`
 `;
 
 const ProfilePhoto = styled.div`
-  //flex: 1;
   height: 80px;
   width: 80px;
-  //padding-left: 10px;
-  //padding-top: 10px;
-  //background: red;
 `;
 
 const Body = styled.div`
@@ -94,6 +64,28 @@ const Body = styled.div`
   height: ${(props) => props};
   padding-top: 20px;
   background: #f7f9fb;
+`;
+
+const MonitoringBlock = styled.div`
+  flex: 1;
+  height: 50px;
+  width: 440px;
+  background: #d8d8d8;
+  display: flex;
+  //ustify-content: center;
+  align-items: center;
+  padding-left: 20px;
+  border-radius: 10px;
+`;
+
+const DisplayNumber = styled.div`
+  flex; 1;
+  height: 30px;
+  width: 200px;
+  border-radius: 4px;
+  border:1px;
+  border-color: #e4e7ec;
+  background: #ffffff;
 `;
 class GetUser extends React.Component {
   // 사용자 정보를 가져온다면 갱신한다.
@@ -140,6 +132,16 @@ class GetUser extends React.Component {
     //sub(); // subscribe
   }
 
+  pub = async () => {
+    try {
+      await Amplify.PubSub.publish("pi/7", {
+        msg: "Hello to all subscribers!",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
     const { age_range, profile_image_url } = this.state;
 
@@ -172,9 +174,60 @@ class GetUser extends React.Component {
             }}
           >
             <StoreLocation
-              style={{ width: "500px", height: "100%" }}
+              style={{
+                width: "500px",
+                height: "500px",
+              }}
               storeCoordinate={this.state.storeCoordinate}
             ></StoreLocation>
+            <div
+              style={{
+                marginLeft: "40px",
+                width: "500px",
+                height: "400px",
+                backgroundColor: "#CEE3F6",
+                borderRadius: "8px",
+              }}
+            >
+              <div
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  width: "460px",
+                  height: "300px",
+                  //backgroundColor: "blue",
+                  margin: "20px",
+                  flexDirection: "column",
+                }}
+              >
+                <MonitoringBlock>
+                  <DisplayNumber></DisplayNumber>
+                </MonitoringBlock>
+                <MonitoringBlock>
+                  <DisplayNumber></DisplayNumber>
+                </MonitoringBlock>
+                <MonitoringBlock>
+                  <DisplayNumber></DisplayNumber>
+                </MonitoringBlock>
+                <MonitoringBlock>
+                  <DisplayNumber></DisplayNumber>
+                </MonitoringBlock>
+                <MonitoringBlock>
+                  <DisplayNumber></DisplayNumber>
+                </MonitoringBlock>
+              </div>
+              <div
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  width: "500px",
+                  height: "50px",
+                  backgroundColor: "green",
+                }}
+              >
+                <button onClick={this.pub}>Default</button>
+              </div>
+            </div>
           </div>
           <div
             style={{
