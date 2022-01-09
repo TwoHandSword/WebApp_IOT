@@ -105,6 +105,7 @@ class GetUser extends React.Component {
     Temperature: 0,
     Humidity: 0,
     AirPollution: 0,
+    Heat: 0,
     isStarting: false,
     buttonName: "Start",
     stateDescription: "Search...Device",
@@ -132,6 +133,12 @@ class GetUser extends React.Component {
   updateMonitoringAirPollution = (data) => {
     this.setState({
       AirPollution: data,
+    });
+  };
+
+  updateMonitoringHeat = (data) => {
+    this.setState({
+      Heat: data,
     });
   };
 
@@ -366,7 +373,9 @@ class GetUser extends React.Component {
                     </DisplayNumber>
                   </MonitoringBlock>
                   <MonitoringBlock>
-                    <DisplayNumber></DisplayNumber>
+                    <DisplayNumber>
+                      Warmer temp : {this.state.Heat}
+                    </DisplayNumber>
                   </MonitoringBlock>
                 </div>
                 <div
@@ -462,9 +471,22 @@ class GetUser extends React.Component {
                 getData={this.updateMonitoringHumidity}
               ></High>
               <High
-                channelName="stm/heat"
+                channelName="stm/air"
                 signalName="Air pollution"
                 getData={this.updateMonitoringAirPollution}
+              ></High>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <High
+                channelName="stm/heat"
+                signalName="Warmer"
+                getData={this.updateMonitoringHeat}
               ></High>
             </div>
           </Body>
