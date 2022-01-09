@@ -15,7 +15,7 @@ class StoreLocation extends React.Component {
   componentDidMount = () => {
     //컴포넌트가 마운트 되자마자 상위 컴포넌트에서 받아 온 매장 위도와 경도의 값으로 initMap 함수를 실행시킨다.
     //const { storeCoordinate } = this.props;
-    //this.initMap(storeCoordinate[0], storeCoordinate[1], map);
+    this.initMap(storeCoordinate[0], storeCoordinate[1], map);
     //props로 받아오는 위도와 경도 값이 배열에 들어있기 때문에 위처럼 사용했다.
   };
 
@@ -68,7 +68,7 @@ class StoreLocation extends React.Component {
   }
 
   render() {
-    this.sub();
+    //this.sub();
     return (
       <div
         style={{ width: "300px", height: "300px" }}
