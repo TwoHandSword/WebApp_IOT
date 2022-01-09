@@ -98,4 +98,23 @@ in TwoHandSword Repository
 
 ### ㄴ webApp_iot
 
+<br>
+
 ### ㄴ RasberryPi_withAWSIot
+
+<br>
+<br>
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/41497254/148669316-f39ae2b4-a3b9-4164-b8f0-24973066f7e0.png" width="1250" height="400
+">
+</p>
+
+- System Architecture
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/41497254/148669612-ccf50c1a-ec22-45e8-a117-7d874e5b7928.png" width="1250" height="400
+">
+</p>
+
+- Flow Chart
