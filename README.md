@@ -56,3 +56,46 @@
 </p>
 
 ### Just like the photo above, it shows real-time data for the rest of the sensors.
+
+<br>
+
+## How did we make this?
+
+<br>
+
+We made this service using low power communication called mqtt. If you use mqtt, you can send and receive information on a specific topic to multiple devices on the same network with very little power.
+
+<br>
+
+In our service, a total of 3 mqtt clients are attached to one network.One is a board with STM MCU attached to a mobility device, the other is a Raspberry Pi board that acts as a main server, and the other is a Web Application developed with React.js.
+
+<br>
+
+## What would we use?
+
+<br>
+
+First of all, we applied AWS IOT to use the mqtt service.
+
+https://aws.amazon.com/iot/
+
+This service is very well explained, and it was easy to apply to various MCUs and SBCs, and there were even libraries applicable to React.js.
+
+The structure of our service is as follows.
+
+<br>
+<br>
+
+in TwoHandSword Repository
+<br>
+<br>
+
+### ㄴ STM32_BasedOnDemoMqtt_App <br>
+
+### ㄴ STM32_BasedOnDemoMqtt_Bsw
+
+<br>
+
+### ㄴ webApp_iot
+
+### ㄴ RasberryPi_withAWSIot
