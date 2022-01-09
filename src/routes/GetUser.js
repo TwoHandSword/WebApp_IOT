@@ -79,13 +79,19 @@ const MonitoringBlock = styled.div`
 `;
 
 const DisplayNumber = styled.div`
-  flex; 1;
+  //flex; 1;
   height: 30px;
-  width: 200px;
+  width: 180px;
   border-radius: 4px;
-  border:1px;
+  border: 1px;
   border-color: #e4e7ec;
   background: #ffffff;
+  display: "flex";
+  justify-content: "center";
+  align-items: "center";
+  text-align: "center";
+  padding-left: 20px;
+  font-size: 20px;
 `;
 class GetUser extends React.Component {
   // 사용자 정보를 가져온다면 갱신한다.
@@ -95,10 +101,62 @@ class GetUser extends React.Component {
     width: window.innerWidth,
     height: window.innerHeight,
     storeCoordinate: [35.85133, 127.734086],
+    HeartRate: 0,
+    Temperature: 0,
+    Humidity: 0,
+    AirPollution: 0,
+    isStarting: false,
+    buttonName: "Start",
+    stateDescription: "Search...Device",
+    stateLight: "#F78181",
+  };
+
+  updateMonitoringHeartRate = (data) => {
+    this.setState({
+      HeartRate: data,
+    });
+  };
+
+  updateMonitoringTemperature = (data) => {
+    this.setState({
+      Temperature: data,
+    });
+  };
+
+  updateMonitoringHumidity = (data) => {
+    this.setState({
+      Humidity: data,
+    });
+  };
+
+  updateMonitoringAirPollution = (data) => {
+    this.setState({
+      AirPollution: data,
+    });
   };
 
   updateDimensions = () => {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
+  };
+
+  updateStateButton = () => {
+    if (this.state.isStarting === false) {
+      this.pub_start();
+      this.setState({
+        isStarting: true,
+        buttonName: "Stop",
+        stateDescription: "Working....",
+        stateLight: "#A9F5BC",
+      });
+    } else {
+      this.pub_stop();
+      this.setState({
+        isStarting: false,
+        buttonName: "Start",
+        stateDescription: "Search...Device",
+        stateLight: "#F78181",
+      });
+    }
   };
 
   componentWillUnmount() {
@@ -132,10 +190,50 @@ class GetUser extends React.Component {
     //sub(); // subscribe
   }
 
-  pub = async () => {
+  pub_zero_warmer = async () => {
     try {
-      await Amplify.PubSub.publish("pi/7", {
-        msg: "Hello to all subscribers!",
+      await Amplify.PubSub.publish("iotdemo/topic/2", {
+        warmer: 0,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  pub_one_warmer = async () => {
+    try {
+      await Amplify.PubSub.publish("iotdemo/topic/2", {
+        warmer: 1,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  pub_two_warmer = async () => {
+    try {
+      await Amplify.PubSub.publish("iotdemo/topic/2", {
+        warmer: 2,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  pub_start = async () => {
+    try {
+      await Amplify.PubSub.publish("iotdemo/topic/1", {
+        OnOff: 1,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  pub_stop = async () => {
+    try {
+      await Amplify.PubSub.publish("iotdemo/topic/1", {
+        OnOff: 0,
       });
     } catch (error) {
       console.log(error);
@@ -163,93 +261,216 @@ class GetUser extends React.Component {
             />
           </ProfilePhoto>
           <ProfileName>{age_range ? age_range : ""}'s Sticks!</ProfileName>
-        </Profile>
-        <div style={{ height: "2px", backgroundColor: "#e4e7ec" }}></div>
-        <Body height={this.state.height - 80}>
           <div
             style={{
+              width: "300px",
+              height: "60px",
               display: "flex",
-              justifyContent: "center",
-              marginBottom: "40px",
+              flexDirection: "row",
+              borderRadius: "8px",
             }}
           >
-            <StoreLocation
-              style={{
-                width: "500px",
-                height: "500px",
-              }}
-              storeCoordinate={this.state.storeCoordinate}
-            ></StoreLocation>
             <div
               style={{
-                marginLeft: "40px",
-                width: "500px",
-                height: "400px",
-                backgroundColor: "#CEE3F6",
+                height: "60px",
+                width: "80px",
+                backgroundColor: "#E6E6E6",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 borderRadius: "8px",
               }}
+              onClick={this.updateStateButton}
             >
-              <div
+              {this.state.buttonName}
+            </div>
+            <div
+              style={{
+                height: "60px",
+                width: "180px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#A4A4A4",
+              }}
+            >
+              {this.state.stateDescription}
+            </div>
+            <div
+              style={{
+                height: "60px",
+                width: "60px",
+                borderRadius: "30px",
+                backgroundColor: this.state.stateLight,
+              }}
+            ></div>
+          </div>
+        </Profile>
+        <div style={{ height: "2px", backgroundColor: "#e4e7ec" }}></div>
+
+        {this.state.isStarting ? (
+          <Body height={this.state.height - 80}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "40px",
+              }}
+            >
+              <StoreLocation
                 style={{
-                  flex: 1,
-                  display: "flex",
-                  width: "460px",
-                  height: "300px",
-                  //backgroundColor: "blue",
-                  margin: "20px",
-                  flexDirection: "column",
-                }}
-              >
-                <MonitoringBlock>
-                  <DisplayNumber></DisplayNumber>
-                </MonitoringBlock>
-                <MonitoringBlock>
-                  <DisplayNumber></DisplayNumber>
-                </MonitoringBlock>
-                <MonitoringBlock>
-                  <DisplayNumber></DisplayNumber>
-                </MonitoringBlock>
-                <MonitoringBlock>
-                  <DisplayNumber></DisplayNumber>
-                </MonitoringBlock>
-                <MonitoringBlock>
-                  <DisplayNumber></DisplayNumber>
-                </MonitoringBlock>
-              </div>
-              <div
-                style={{
-                  flex: 1,
-                  display: "flex",
                   width: "500px",
-                  height: "50px",
-                  backgroundColor: "green",
+                  height: "500px",
+                }}
+                storeCoordinate={this.state.storeCoordinate}
+              ></StoreLocation>
+
+              <div
+                style={{
+                  marginLeft: "40px",
+                  width: "500px",
+                  height: "400px",
+                  backgroundColor: "#CEE3F6",
+                  borderRadius: "8px",
                 }}
               >
-                <button onClick={this.pub}>Default</button>
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    width: "460px",
+                    height: "300px",
+                    //backgroundColor: "blue",
+                    margin: "20px",
+                    flexDirection: "column",
+                  }}
+                >
+                  <MonitoringBlock>
+                    <DisplayNumber>
+                      Heaet Rate : {this.state.HeartRate}
+                    </DisplayNumber>
+                  </MonitoringBlock>
+                  <MonitoringBlock>
+                    <DisplayNumber>
+                      Temperature : {this.state.Temperature}
+                    </DisplayNumber>
+                  </MonitoringBlock>
+                  <MonitoringBlock>
+                    <DisplayNumber>
+                      Humidity : {this.state.Humidity}
+                    </DisplayNumber>
+                  </MonitoringBlock>
+                  <MonitoringBlock>
+                    <DisplayNumber>
+                      Air Pollution : {this.state.AirPollution}
+                    </DisplayNumber>
+                  </MonitoringBlock>
+                  <MonitoringBlock>
+                    <DisplayNumber></DisplayNumber>
+                  </MonitoringBlock>
+                </div>
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    width: "460px",
+                    height: "50px",
+                    paddingLeft: "20px",
+                    paddingRight: "20px",
+                  }}
+                >
+                  <div
+                    style={{
+                      height: "50px",
+                      width: "120px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: "#F5A9A9",
+                    }}
+                    onClick={this.pub_zero_warmer}
+                  >
+                    Warmer : 0
+                  </div>
+                  <div
+                    style={{
+                      height: "50px",
+                      width: "120px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: "#F7BE81",
+                    }}
+                    onClick={this.pub_one_warmer}
+                  >
+                    Warmer : 1
+                  </div>
+                  <div
+                    style={{
+                      height: "50px",
+                      width: "120px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: "#FFBF00",
+                    }}
+                    onClick={this.pub_two_warmer}
+                  >
+                    Warmer : 2
+                  </div>
+                  <div
+                    style={{
+                      height: "50px",
+                      width: "100px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: "#D8D8D8",
+                    }}
+                  ></div>
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
-            <High channelName="pi/1" signalName="Heart Rates"></High>
-            <High channelName="pi/2" signalName="Temperature"></High>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
-            <High channelName="pi/3" signalName="Humidity"></High>
-            <High channelName="pi/4" signalName="Air pollution"></High>
-          </div>
-        </Body>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <High
+                channelName="stm/heart"
+                signalName="Heart Rates"
+                getData={this.updateMonitoringHeartRate}
+              ></High>
+              <High
+                channelName="stm/temperature"
+                signalName="Temperature"
+                getData={this.updateMonitoringTemperature}
+              ></High>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <High
+                channelName="stm/hum"
+                signalName="Humidity"
+                getData={this.updateMonitoringHumidity}
+              ></High>
+              <High
+                channelName="stm/heat"
+                signalName="Air pollution"
+                getData={this.updateMonitoringAirPollution}
+              ></High>
+            </div>
+          </Body>
+        ) : (
+          <Body height={this.state.height - 80}></Body>
+        )}
       </Container>
     );
   }

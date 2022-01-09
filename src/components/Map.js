@@ -52,13 +52,15 @@ class StoreLocation extends React.Component {
   };
 
   sub() {
-    Amplify.PubSub.subscribe("pi/6").subscribe({
+    Amplify.PubSub.subscribe("stm/gps").subscribe({
       next: (data) => {
         console.log("Message received", data);
         storeCoordinate[0] = data.value.lat;
         storeCoordinate[1] = data.value.lan;
-
-        this.initMap(storeCoordinate[0], storeCoordinate[1], map);
+        if (count % 1500 === 0) {
+          this.initMap(storeCoordinate[0], storeCoordinate[1], map);
+        }
+        count++;
       },
       error: (error) => console.error(error),
       close: () => console.log("Done"),

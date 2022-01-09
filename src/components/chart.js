@@ -50,7 +50,7 @@ const High = (props) => {
     Amplify.PubSub.subscribe(props.channelName).subscribe({
       next: (data) => {
         //console.log("Message received", data.value.action);
-        data_python = data.value.action;
+        data_python = data.value.data;
       },
       error: (error) => console.error(error),
       close: () => console.log("Done"),
@@ -60,8 +60,9 @@ const High = (props) => {
       const chart = chartComponent?.current.chart;
       if (chart) {
         chart.series[0].addPoint(data_python);
+        props.getData(data_python);
       }
-    }, 2000);
+    }, 5000);
 
     return () => {
       clearInterval(interval);
