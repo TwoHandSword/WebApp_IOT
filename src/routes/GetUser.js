@@ -110,6 +110,13 @@ class GetUser extends React.Component {
     buttonName: "Start",
     stateDescription: "Search...Device",
     stateLight: "#F78181",
+    price: 0,
+  };
+
+  updateMonitoringPrice = (data) => {
+    this.setState({
+      price: data,
+    });
   };
 
   updateMonitoringHeartRate = (data) => {
@@ -270,11 +277,27 @@ class GetUser extends React.Component {
           <ProfileName>{age_range ? age_range : ""}'s Sticks!</ProfileName>
           <div
             style={{
+              width: "200px",
+              height: "60px",
+              backgroundColor: "#000000",
+              borderRadius: "8px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "yellow",
+              fontSize: "30px",
+            }}
+          >
+            Price : {this.state.price}
+          </div>
+          <div
+            style={{
               width: "300px",
               height: "60px",
               display: "flex",
               flexDirection: "row",
               borderRadius: "8px",
+              marginLeft: "50px",
             }}
           >
             <div
@@ -378,6 +401,7 @@ class GetUser extends React.Component {
                     </DisplayNumber>
                   </MonitoringBlock>
                 </div>
+
                 <div
                   style={{
                     flex: 1,
@@ -487,6 +511,11 @@ class GetUser extends React.Component {
                 channelName="stm/heat"
                 signalName="Warmer"
                 getData={this.updateMonitoringHeat}
+              ></High>
+              <High
+                channelName="pi/charge"
+                signalName="charge"
+                getData={this.updateMonitoringPrice}
               ></High>
             </div>
           </Body>
